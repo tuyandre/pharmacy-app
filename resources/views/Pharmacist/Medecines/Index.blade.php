@@ -55,7 +55,7 @@
                         </th>
                         <?php $counter++ ?>
                         <td>{{ $medecine->name }}</td>
-                        <td><img src="{{asset('storage/MedecineImages/'.   $medecine->image)}}" width="60" height="auto"  alt="Image"></td>
+                        <td><img src="{{asset($medecine->image)}}" width="60" height="auto"  alt="Image"></td>
                         <td>{{ $medecine->price }} rwf</td>
                         <td>{{ $medecine->numberOf }}</td>
                         <td class="td-actions">
