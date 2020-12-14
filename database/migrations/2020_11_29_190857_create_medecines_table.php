@@ -16,9 +16,10 @@ class CreateMedecinesTable extends Migration
         Schema::create('medecines', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->unique();
-            $table->string('image');
+            $table->string('image')->nullable();
             $table->string('description');
             $table->bigInteger('price');
+            $table->string('file_url');
             $table->bigInteger('numberOf');
             $table->unsignedInteger('pharmacy_id');
             $table->foreign('pharmacy_id')->references('id')->on('pharmacies');

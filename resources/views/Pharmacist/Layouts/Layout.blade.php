@@ -17,6 +17,7 @@
   <link href="/Dashboard/assets/css/material-dashboard.css?v=2.1.2" rel="stylesheet" />
   <!-- CSS Just for demo purpose, don't include it in your project -->
   <link href="/Dashboard/assets/demo/demo.css" rel="stylesheet" />
+  @cloudinaryJS
 </head>
 
 <body class="">

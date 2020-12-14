@@ -4,11 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use CloudinaryLabs\CloudinaryLaravel\MediaAlly;
+
 
 class Medecine extends Model
 {
     use HasFactory;
-    protected $fillable = ['name', 'image', 'description', 'price', 'numberOf', 'pharmacy_id'];
+    use MediaAlly;
+
+    protected $fillable = ['name', 'image', 'file_url', 'description', 'price', 'numberOf', 'pharmacy_id'];
 
     public function pharmacy()
     {

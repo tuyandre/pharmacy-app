@@ -86,18 +86,14 @@ class MedecineController extends Controller
         }
         if ($request->hasFile('Mimage')) {
             $file = $request->file('Mimage');
-            $image = Image::make($file)->resize(600, 600)->encode();
-            $filename = time() . '.' . $file->getClientOriginalName();
-            Storage::put($filename, $image);
-            Storage::move($filename, 'public/MedecineImages/' . $filename);
-
-            // $filename = $file->getClientOriginalName();
-            // Image::make($file->getRealPath())->resize(600, 600)->save(public_path('/storage/MedecineImages/' . $filename));
-
+            $filename = $file->getClientOriginalName();
+            Image::make($file->getRealPath())->resize(600, 600)->save(public_path('/storage/MedecineImages/' . $filename));
+            $result = $request->file('Mimage')->storeOnCloudinary();
             $newMedecine = Medecine::create([
                 'image' => $filename,
                 'pharmacy_id' => $pharmacyId,
                 'name' => $MedecineName,
+                'file_url' => $result->getPath(),
                 'numberOf' => $MedecineItems,
                 'price' => $MedecinePrice,
                 'description' => $MedecineDescription
