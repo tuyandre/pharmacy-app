@@ -80,6 +80,11 @@
 				<h2>LATEST MEDECINES</h2>
 			</div>
 			<div class="product-slider owl-carousel">
+@if(count($medecinesCarousel) == 0)
+  <div class="alert alert-danger">
+      <h3 class="text-center"><b>No medecines available</b></h3>
+  </div>
+@else
 @foreach ($medecinesCarousel as $item)
 <div class="product-item">
     <div class="pi-pic">
@@ -96,7 +101,7 @@
 </div>
 
 @endforeach
-
+@endif
 			</div>
 		</div>
 	</section>
