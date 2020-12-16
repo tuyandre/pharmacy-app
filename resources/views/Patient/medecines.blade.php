@@ -56,10 +56,11 @@
                             <p>{{ $medecine->name }}</p>
                         </div>
                     </div>
+                    </div>
                      @endforeach
                      @endif
 
-                </div>
+
             </div>
         </div>
         <div class="text-center">
