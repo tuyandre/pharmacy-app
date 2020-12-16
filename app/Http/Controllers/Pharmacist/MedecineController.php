@@ -87,7 +87,6 @@ class MedecineController extends Controller
         if ($request->hasFile('Mimage')) {
             $file = $request->file('Mimage');
             $filename = $file->getClientOriginalName();
-            Image::make($file->getRealPath())->resize(600, 600)->save(public_path('/storage/MedecineImages/' . $filename));
             $result = $request->file('Mimage')->storeOnCloudinary();
             $newMedecine = Medecine::create([
                 'image' => $filename,
