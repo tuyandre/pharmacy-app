@@ -1,4 +1,4 @@
-@extends('layouts.layout')
+@extends('layouts.Layout')
 
 @section('content')
 <section class="product-section"  style="background-color: #ffffe6">
