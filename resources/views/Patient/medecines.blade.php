@@ -56,7 +56,6 @@
                             <p>{{ $medecine->name }}</p>
                         </div>
                     </div>
-                </div>
                      @endforeach
                      @endif
 
