@@ -22,7 +22,7 @@
                     <ul class="product-list">
                       @foreach ($userOrder->medecines as $medecine)
                       <li>
-                        <div class="pl-thumb"><img src="{{asset('/storage/MedecineImages/'.$medecine->image)}}" alt=""></div>
+                        <div class="pl-thumb"><img src="{{$medecine->file_url}}" height="90" alt=""></div>
                         <h6>Name: {{ $medecine->name }}</h6>
                         <p>Pharmacy: <a href="{{ route('viewThisPharmacy',$medecine->pharmacy->id) }}">{{ $medecine->pharmacy->name }}</a></p>
                         <p>Location: {{ $medecine->pharmacy->location }}</p>

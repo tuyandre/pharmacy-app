@@ -9,7 +9,7 @@
         <div class="row">
             <div class="col-lg-6">
                 <div class="product-pic-zoom">
-                    <img class="product-big-img" src="{{ asset('/storage/MedecineImages/' .$medecine->image) }}" alt="">
+                    <img class="product-big-img" src="{{$medecine->file_url}}"  alt="">
                 </div>
 
             </div>

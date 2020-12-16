@@ -88,10 +88,70 @@ class APIMedecineController extends Controller
         if ($cart) {
 
             if ($cart->medecines()->count() > 0) {
-                return $cart;
+                return response()->json(['my_cart' => $cart, 'number' => $cart->medecines()->count()]);
             }
             return response()->json(['message' => 'Dear ' . Auth()->user()->fname . ' ' . Auth()->user()->lname . ' your cart is currently empty']);
         }
         return response()->json(['message' => 'Dear ' . Auth()->user()->fname . ' ' . Auth()->user()->lname . ' your cart is currently empty']);
+    }
+    public function calculateTotal(Request $request)
+    {
+        $user = Auth::user()->id;
+        $existingOrder = Order::where('user_id', $user);
+        if (!$existingOrder->exists()) {
+            //if the user hasn 't other medecines//
+            $input = $request->all();
+            for ($i = 0; $i < count($input['NberOfMedecines']); $i++) {
+                // if empty fields
+                if (empty($input['NberOfMedecines'][$i])) {
+                    return response()->json(['message' => 'Please fill all fields'], 500);
+                }
+                //if completed files
+                for ($j = 0; $j < count($input['Id']); $j++) {
+                    $medecineCheck = Medecine::where('id', $input['Id'][$j])->value('numberOf');
+                    $medecineName = Medecine::where('id', $input['Id'][$j])->value('name');
+                    $medecinePrice = Medecine::where('id', $input['Id'][$j])->value('price');
+                    if ($input['NberOfMedecines'][$j] > $medecineCheck) {
+                        // return back()->with('danger', 'the book' . $medecineName .  ' medecine has only ' .  $medecineCheck  . ' items in the stock ');
+                        return response()->json(['message' => 'the book ' . $medecineName .  ' medecine has only ' .  $medecineCheck  . ' items in the stock '], 500);
+                    }
+                    $data = [
+                        'user_id' => Auth::user()->id
+                    ];
+                }
+            }
+            $makeOrder = Order::create($data);
+            if ($makeOrder) {
+                $Order_Medecine = Order::where('user_id', $user)->first();
+                $Cart = Cart::where('user_id', $user)->first();
+                for ($i = 0; $i < count($input['Id']); $i++) {
+                    $medecinePrice = Medecine::where('id', $input['Id'][$i])->value('price');
+                    $items = $input['NberOfMedecines'][$i];
+                    $Order_Medecine->medecines()->attach(
+                        $input['Id'][$i],
+                        array('items' => $items, 'amount' => $medecinePrice * $items)
+                    );
+                }
+                $Cart = Cart::where('user_id', $user)->first();
+                $CartDeletion = Cart::where('user_id', $user);
+                if ($Cart->medecines()->detach()) {
+                    $CartDeletion->delete();
+                }
+                return response()->json(['message' => 'Order made successful'], 200);
+            }
+        }
+        //if Orders exists before
+
+    }
+    public function myOrder()
+    {
+        $user = Auth::user()->id;
+        $userOrder = Order::where('user_id', $user)->with('medecines')->first();
+        $checkIfOrderExists = Order::where('user_id', $user)->exists();
+        if ($checkIfOrderExists && $userOrder->medecines()->count() > 0) {
+            $medecinesOrdered = $userOrder->medecines()->get();
+            $totalToPay = $userOrder->medecines->sum('pivot.amount');
+            return response()->json(['Medecines_ordered' => $medecinesOrdered, 'total_to_pay' => $totalToPay]);
+        }
     }
 }

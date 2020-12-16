@@ -84,7 +84,7 @@
                                 <tr class="cart-row">
                                     <input type="hidden" name="Id" value="{{$medecine->id}}">
                                     <td class="product-col">
-                                        <img src="{{asset('/storage/MedecineImages/'.$medecine->image)}}" alt="">
+                                        <img src="{{$medecine->file_url}}" height="70" alt="">
                                         <div class="pc-title">
                                             <h4>{{$medecine->name}}</h4>
                                         </div>

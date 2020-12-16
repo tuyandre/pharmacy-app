@@ -39,10 +39,10 @@
                      <div class="col-lg-3 col-sm-6">
                      <div class="product-item">
                         <div class="pi-pic">
-                            <img src="{{ asset('/storage/MedecineImages/' .$medecine->image) }}"
+                            <img src="{{$medecine->file_url}}"
                             style="border:0px solid #4d4d4d;
                             box-shadow: 5px 2px 5px 5px grey;
-                              border-radius: 2%;" alt="">
+                              border-radius: 2%;" alt=""  height="250">
                             <div class="pi-links">
                                 <a href="{{ route('patientMedecines.show',$medecine->id) }}" class="add-card"><i class="flaticon-bag"></i><span>VIEW DRUG</span></a>
                             </div>

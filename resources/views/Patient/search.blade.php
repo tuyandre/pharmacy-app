@@ -33,7 +33,7 @@
                      <div class="col-lg-3 col-sm-6">
                      <div class="product-item">
                         <div class="pi-pic">
-                            <img src="{{ asset('/storage/MedecineImages/' .$medecine->image) }}"
+                            <img src="{{$medecine->file_url}}"
                             style="border:0px solid #4d4d4d;
                             box-shadow: 5px 2px 5px 5px grey;
                               border-radius: 2%;" alt="">

@@ -32,7 +32,9 @@ Route::group([
 
 Route::get('viewAllMedecines', [APIMedecineController::class, 'viewAllMedecines']);
 Route::get('myCart', [APIMedecineController::class, 'myCart']);
-Route::get('viewSingleMedecine/{id}', [APIMedecineController::class, 'viewSingleMedecine']);
+//Route::get('viewSingleMedecine/{id}', [APIMedecineController::class, 'viewSingleMedecine']);
 Route::post('searchMedecine', [APIMedecineController::class, 'searchMedecine']);
-Route::post('viewSingleMedecine/{id}/addThisMedecineToCart', [APIMedecineController::class, 'addThisMedecineToCart']);
+Route::post('addThisMedecineToCart/{id}', [APIMedecineController::class, 'addThisMedecineToCart']);
 Route::post('removeThisMedecineFromCart/{id}', [APIMedecineController::class, 'removeThisMedecineFromCart']);
+Route::post('calculateTotal', [APIMedecineController::class, 'calculateTotal']);
+Route::get('myTotal', [APIMedecineController::class, 'myOrder']);

@@ -83,7 +83,7 @@
 @foreach ($medecinesCarousel as $item)
 <div class="product-item">
     <div class="pi-pic">
-        <img src="{{ asset('/storage/MedecineImages/'. $item->image) }}" style="border:0px solid #4d4d4d;
+        <img src="{{$item->file_url}}" width="80" height="250"  style="border:0px solid #4d4d4d;
         box-shadow: 5px 2px 5px 5px grey;
           border-radius: 2%;"
           alt="">
