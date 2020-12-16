@@ -34,7 +34,11 @@
 
             <div class="col-lg-12  order-1 order-lg-2 mb-5 mb-lg-0">
                 <div class="row">
-
+                    @if(count($medecinesCarousel) == 0)
+                    <div class="alert alert-danger">
+                        <h3 class="text-center"><b>No medecines available</b></h3>
+                    </div>
+                    @else
                      @foreach ($medecines as $medecine)
                      <div class="col-lg-3 col-sm-6">
                      <div class="product-item">
@@ -54,6 +58,7 @@
                     </div>
                 </div>
                      @endforeach
+                     @endif
 
                 </div>
             </div>
