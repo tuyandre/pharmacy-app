@@ -29,6 +29,7 @@
                         <p>Price: Rwf{{ $medecine->price }}</p>
                         <p>Ordered items: {{ $medecine->pivot->items }}</p>
                         <p>Total:{{$medecine->price * $medecine->pivot->items}} frws</p>
+                         <a href="{{ route('printInstructions',$medecine->id) }}" class="btn btn-primary">Print Instructions</a>
                     </li>
                       @endforeach
                     </ul>

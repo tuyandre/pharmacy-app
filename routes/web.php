@@ -9,6 +9,7 @@ use App\Http\Controllers\Pharmacist\OrderController;
 use App\Http\Controllers\Pharmacist\InstitutionController;
 use App\Http\Controllers\SuperAdmin\PharmacyController;
 use App\Http\Controllers\Patient\viewPharmacyController;
+use App\Http\Controllers\Pharmacist\InstructionController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -35,13 +36,16 @@ Route::resource('pharmacies', PharmacyController::class);
 //Pharmacist
 Route::resource('medecines', MedecineController::class);
 Route::resource('institutions', InstitutionController::class);
+Route::resource('instructions', InstructionController::class);
 
 //Patient
 Route::resource('/patientMedecines', PatientMedecineController::class);
-Route::get('/search', [PatientMedecineController::class, 'search'])->name('search');
+Route::get('/searchByName', [PatientMedecineController::class, 'searchByName'])->name('searchByName');
+Route::get('/searchByLocation', [PatientMedecineController::class, 'searchByLocation'])->name('searchByLocation');
 Route::get('/myCart', [CartController::class, 'myCart'])->name('myCart');
 Route::post('/addMedecineToCart', [CartController::class, 'addMedecineToCart'])->name('addMedecineToCart');
 Route::delete('/removeMedecineFromCart/{id}', [CartController::class, 'removeMedecineFromCart'])->name('removeMedecineFromCart');
 Route::get('/pharmacy/{id}', [viewPharmacyController::class, 'viewThisPharmacy'])->name('viewThisPharmacy');
 Route::post('/calculateTotal', [CartController::class, 'calculateTotal'])->name('calculateTotal');
 Route::get('/myTotal', [CartController::class, 'myTotal'])->name('myTotal');
+Route::get('/printInstructions/{id}', [HomeController::class, 'printInstructions'])->name('printInstructions');

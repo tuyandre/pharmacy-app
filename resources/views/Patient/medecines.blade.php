@@ -4,12 +4,18 @@
 <div class="page-top-info" >
     <div class="container">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-3">
                 <h4>Medecine Page</h4>
                     <div class="site-pagination">
                       <a href="">Home</a> /
                          <a href="">Medecines</a> /
                      </div>
+            </div>
+            <div class="col-md-3">
+                <h5 class="text-danger"><b><marquee direction="up"
+                    scrollamount="1">
+                you can search medecine by name or by location
+                </marquee></b></h5>
             </div>
             <div class="col-md-6">
                 @foreach (['danger', 'warning', 'success', 'info'] as $msg)
@@ -36,7 +42,7 @@
                 <div class="row">
                     @if(count($medecines) == 0)
                     <div class="alert alert-danger">
-                        <h3 class="text-center"><b>No medecines available</b></h3>
+                        <h3 class="text-center"><b>No medecines available Now..please come back Later</b></h3>
                     </div>
                     @else
                      @foreach ($medecines as $medecine)

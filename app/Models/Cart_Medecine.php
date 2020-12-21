@@ -11,9 +11,4 @@ class Cart_Medecine extends Model
     protected $fillable = [
         'cart_id', 'medecine_id'
     ];
-    public function orders()
-    {
-        return $this->BelongsToMany(Cart::class, 'order_books')
-            ->withPivot('items', 'amount');
-    }
 }

@@ -45,6 +45,12 @@
               <p>My Institutions</p>
             </a>
           </li>
+          <li class="nav-item ">
+            <a class="nav-link" href="{{ route('instructions.index') }}">
+              <i class="material-icons">backpack</i>
+              <p>Medecines Instructions</p>
+            </a>
+          </li>
         </ul>
       </div>
     </div>

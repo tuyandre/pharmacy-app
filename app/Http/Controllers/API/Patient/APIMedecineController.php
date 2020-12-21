@@ -112,7 +112,6 @@ class APIMedecineController extends Controller
                     $medecineName = Medecine::where('id', $input['Id'][$j])->value('name');
                     $medecinePrice = Medecine::where('id', $input['Id'][$j])->value('price');
                     if ($input['NberOfMedecines'][$j] > $medecineCheck) {
-                        // return back()->with('danger', 'the book' . $medecineName .  ' medecine has only ' .  $medecineCheck  . ' items in the stock ');
                         return response()->json(['message' => 'the book ' . $medecineName .  ' medecine has only ' .  $medecineCheck  . ' items in the stock '], 500);
                     }
                     $data = [

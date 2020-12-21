@@ -29,25 +29,27 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                     @foreach ($filteredmedecines as $medecine)
-                     <div class="col-lg-3 col-sm-6">
-                     <div class="product-item">
-                        <div class="pi-pic">
-                            <img src="{{$medecine->file_url}}"
-                            style="border:0px solid #4d4d4d;
-                            box-shadow: 5px 2px 5px 5px grey;
-                              border-radius: 2%;" alt="">
-                            <div class="pi-links">
-                                <a href="{{ route('patientMedecines.show',$medecine->id) }}" class="add-card"><i class="flaticon-bag"></i><span>VIEW DRUG</span></a>
-                            </div>
-                        </div>
-                        <div class="pi-text">
-                            <h6>Rwf {{ $medecine->price }}</h6>
-                            <p>{{ $medecine->name }}</p>
-                        </div>
+                    <div class="row">
+                        @foreach ($medecines as $medecine)
+                        <div class="col-lg-3 col-sm-6">
+                        <div class="product-item">
+                           <div class="pi-pic">
+                               <img src="{{$medecine->file_url}}"
+                               style="border:0px solid #4d4d4d;
+                               box-shadow: 5px 2px 5px 5px grey;
+                                 border-radius: 2%;" alt=""  height="250">
+                               <div class="pi-links">
+                                   <a href="{{ route('patientMedecines.show',$medecine->id) }}" class="add-card"><i class="flaticon-bag"></i><span>VIEW DRUG</span></a>
+                               </div>
+                           </div>
+                           <div class="pi-text">
+                               <h6>Rwf {{ $medecine->price }}</h6>
+                               <p>{{ $medecine->name }}</p>
+                           </div>
+                       </div>
+                       </div>
+                        @endforeach
                     </div>
-                </div>
-                     @endforeach
 
                 </div>
             </div>

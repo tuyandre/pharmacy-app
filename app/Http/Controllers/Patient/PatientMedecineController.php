@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Patient;
 
 use App\Http\Controllers\Controller;
 use App\Models\Medecine;
+use App\Models\Pharmacy;
 use Illuminate\Http\Request;
 
 class PatientMedecineController extends Controller
@@ -55,7 +56,7 @@ class PatientMedecineController extends Controller
         return view('Patient.singleMedecine')->with('medecine', $medecine);
     }
 
-    public function search(Request $request)
+    public function searchByName(Request $request)
     {
         $medecineToSearch = $request->input('medecineToSearch');
         if (empty($medecineToSearch)) {
@@ -63,11 +64,25 @@ class PatientMedecineController extends Controller
         }
         $filteredMedecines = Medecine::where('name', 'LIKE', '%' . $medecineToSearch . '%');
         if (count($filteredMedecines->get()) == 0) {
-            return back()->with('danger', 'your seach did not match any medicine..please try again');
+            return back()->with('danger', 'your search did not match any medicine..please try again');
         }
         // return $filteredMedecines->count();
-        return view('Patient.search')->with('filteredmedecines', $filteredMedecines->simplePaginate(4))
+        return view('Patient.searchByName')->with('filteredmedecines', $filteredMedecines->simplePaginate(4))
             ->with('search', $medecineToSearch);
+    }
+    public function searchByLocation(Request $request)
+    {
+        $locationToSearch = $request->input('locationToSearch');
+        if (empty($locationToSearch)) {
+            return back()->with('danger', 'please enter a location');
+        }
+        $filteredpharmacies = Pharmacy::where('location', 'LIKE', '%' . $locationToSearch . '%')->with('medecines');
+
+        if (count($filteredpharmacies->get()) == 0) {
+            return back()->with('danger', 'your search did not match any medicine..please try again');
+        }
+        return view('Patient.searchByLocation')->with('filteredpharmacies', $filteredpharmacies->simplePaginate(4))
+            ->with('search', $locationToSearch);
     }
 
     /**

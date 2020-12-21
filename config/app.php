@@ -179,6 +179,7 @@ return [
         Intervention\Image\ImageServiceProvider::class,
         Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
         CloudinaryLabs\CloudinaryLaravel\CloudinaryServiceProvider::class,
+        Barryvdh\DomPDF\ServiceProvider::class,
 
 
     ],
@@ -236,6 +237,7 @@ return [
         'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
         'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,
         'Cloudinary' => CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary::class,
+        'PDF' => Barryvdh\DomPDF\Facade::class,
 
 
     ],

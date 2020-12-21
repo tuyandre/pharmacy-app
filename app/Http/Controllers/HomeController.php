@@ -7,6 +7,7 @@ use App\Models\Medecine;
 use App\Models\Pharmacy;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use PDF;
 
 class HomeController extends Controller
 {
@@ -22,8 +23,12 @@ class HomeController extends Controller
     {
         return view('about');
     }
-    public function pay()
+    public function printInstructions($id)
     {
-        return 123;
+        $medecine = Medecine::find($id);
+        $data = ['medecine' => $medecine];
+        $pdf = PDF::loadView('Patient.Instructions', compact('medecine'));
+        $pdf->save(storage_path() . '_resultsPrint.pdf');
+        return $pdf->download('resultsPrint.pdf');
     }
 }

@@ -27,4 +27,8 @@ class Medecine extends Model
     {
         return $this->BelongsToMany(Cart::class, 'cart__medecines');
     }
+    public function instructions()
+    {
+        return $this->hasMany('App\Models\Instruction');
+    }
 }
