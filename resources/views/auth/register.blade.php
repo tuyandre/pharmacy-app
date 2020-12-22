@@ -20,10 +20,10 @@
                 <br>
                 <form class="contact-form" method="POST" action ={{ route('register') }}>
                     @csrf
-                    <input type="text" autocomplete="off" name="fname" placeholder="First Name">
-                    <input type="text" autocomplete="off" name="lname" placeholder="Last Name">
-                    <input type="text" autocomplete="off" name="phoneNo" placeholder="Phone number">
-                    <input type="text" autocomplete="off" name="location" placeholder="Location">
+                    <input type="text" autocomplete="off" name="fname" value="{{ old('fname') }}" placeholder="First Name">
+                    <input type="text" autocomplete="off" name="lname" value="{{ old('lname') }}" placeholder="Last Name">
+                    <input type="text" autocomplete="off" name="phoneNo" value="{{ old('phoneNo') }}" placeholder="Phone number">
+                    <input type="text" autocomplete="off" name="location" value="{{ old('location') }}" placeholder="Location">
                     <select id='select' name="role" onchange="changeValue()">
                         <option selected disabled>Patient or Pharmacist?</option>
                         <option value="Patient">Patient</option>

@@ -20,7 +20,7 @@
                 <br>
                 <form class="contact-form" method="POST" action ={{ route('authentication') }}>
                     @csrf
-                    <input type="text" autocomplete="off" name="phoneNo" placeholder="Phone number">
+                    <input type="text" autocomplete="off" name="phoneNo" value="{{ old('phoneNo') }}" placeholder="Phone number">
                     <input type="password" name="password" placeholder="Password">
                     <br>
                     <button class="site-btn btn-block">LOGIN</button>

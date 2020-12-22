@@ -18,12 +18,12 @@ class AuthController extends Controller
         $phoneNo =  $request->input('phoneNo');
         $password =  $request->input('password');
         if (empty($phoneNo) || empty($password)) {
-            return back()->with('danger', 'please fill all fields');
+            return back()->withInput()->with('danger', 'please fill all fields');
         }
         if (Auth::attempt(['phone_no' => $phoneNo, 'password' => $password])) {
             return $this->redirects();
         }
-        return back()->with('danger', 'invalid phone number of password');
+        return back()->withInput()->with('danger', 'invalid phone number of password');
     }
     public static function redirects()
     {
@@ -48,34 +48,34 @@ class AuthController extends Controller
         $password = $request->input('password');
         $password_confirmation = $request->input('password_confirmation');
         if (empty($fname) || empty($role) || empty($lname) || empty($location) || empty($phoneNo) || empty($password) || empty($password_confirmation)) {
-            return back()->with('danger', 'please fill all fields');
+            return back()->withInput()->with('danger', 'please fill all fields');
         }
         if (!$this->validatePhoneNumber($phoneNo)) {
-            return back()->with('danger', 'invalid phone number');
+            return back()->withInput()->with('danger', 'invalid phone number');
         }
         if (strlen($password) < 8) {
-            return back()->with('danger', 'password must be at least 8 characters');
+            return back()->withInput()->with('danger', 'password must be at least 8 characters');
         }
         if ($password !== $password_confirmation) {
-            return back()->with('danger', 'password confirmation does not match');
+            return back()->withInput()->with('danger', 'password confirmation does not match');
         }
         $checkPhone = User::where('phone_no', $phoneNo)->exists();
         if ($checkPhone) {
-            return back()->with('danger', 'the telephone number provided has already been registered');
+            return back()->withInput()->with('danger', 'the telephone number provided has already been registered');
         }
         if ($role == "Pharmacist") {
             $code = $request->input('pharmacyCode');
             if (empty($code)) {
-                return back()->with('danger', 'please provide your pharmacy code');
+                return back()->withInput()->with('danger', 'please provide your pharmacy code');
             }
             //Querying the pharmacist Code if it exists or not
             $codeCheck = Pharmacy::where('code', $code);
             if (!$codeCheck->exists()) {
-                return back()->with('danger', 'the code provided did not match any pharmacy');
+                return back()->withInput()->with('danger', 'the code provided did not match any pharmacy');
             }
             //if the code already registered
             if ($codeCheck->value('user_id') !== NULL) {
-                return back()->with('danger', 'this pharmacy has its own owner');
+                return back()->withInput()->with('danger', 'this pharmacy has its own owner');
             }
 
             $user = User::create([
