@@ -36,7 +36,7 @@
                     </div>
                   </div>
                   <div class="col-md-6">
-                    <button type="submit" class="btn btn-primary pull-right">Register Medecine</button>
+                    <button type="submit" class="btn btn-primary pull-right">Register Institution</button>
                   </div>
                 </div>
 

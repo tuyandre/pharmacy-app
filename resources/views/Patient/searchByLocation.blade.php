@@ -46,7 +46,7 @@
                        <div class="pi-text">
                            <h6>Rwf {{ $medecine->price }}</h6>
                            <p>{{ $medecine->name }}</p>
-                           <p>Found in <b>{{ $medecine->pharmacy->name }}</b> pharmacy</p>
+                           <p>Found in <b><a href="{{ route('viewThisPharmacy',$medecine->pharmacy->id) }}">{{ $medecine->pharmacy->name }}</a></b> pharmacy</p>
                            <p>Located at <b>{{ $medecine->pharmacy->location }}</b></p>
                        </div>
                    </div>

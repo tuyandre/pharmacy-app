@@ -30,7 +30,7 @@
                     </button>
                 </div>
                     <div class="row">
-                        @foreach ($medecines as $medecine)
+                        @foreach ($filteredmedecines as $medecine)
                         <div class="col-lg-3 col-sm-6">
                         <div class="product-item">
                            <div class="pi-pic">

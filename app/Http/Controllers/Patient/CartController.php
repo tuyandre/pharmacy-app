@@ -98,7 +98,7 @@ class CartController extends Controller
                     $medecineName = Medecine::where('id', $input['Id'][$j])->value('name');
                     $medecinePrice = Medecine::where('id', $input['Id'][$j])->value('price');
                     if ($input['NberOfMedecines'][$j] > $medecineCheck) {
-                        return back()->with('danger', 'the book' . $medecineName .  ' medecine has only ' .  $medecineCheck  . ' items in the stock ');
+                        return back()->with('danger', 'the ' . $medecineName .  ' medecine has only ' .  $medecineCheck  . ' items in the stock ');
                     }
                     $data = [
                         'user_id' => Auth::user()->id

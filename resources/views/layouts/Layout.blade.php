@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zxx">
 <head>
-	<title>Pharmacy App</title>
+	<title>Smart Pharmacy</title>
 	<meta charset="UTF-8">
 	<meta name="description" content=" Divisima | eCommerce Template">
 	<meta name="keywords" content="divisima, eCommerce, creative, html">
@@ -40,7 +40,7 @@
 					<div class="col-lg-2 text-center text-lg-left">
 						<!-- logo -->
 						<a href="" class="site-logo">
-							<h5 style="margin-top:15px">PHARMACY APP</h5>
+							<h5 style="margin-top:15px">SMART PHARMACY</h5>
 						</a>
 					</div>
                     @if(\Request::is('patientMedecines'))
