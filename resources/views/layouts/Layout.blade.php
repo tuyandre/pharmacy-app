@@ -108,7 +108,7 @@
 					<li><a href="/">Home</a></li>
 					<li><a href="/about">About us</a></li>
 					<li><a href="{{ route('patientMedecines.index') }}">Medecines</a></li>
-					<li><a href="#">Contact us</a></li>
+					<li><a href="/contact">Contact us</a></li>
 					<!-- <li style="float: right">
 						<a href="#">Contact us</a>
 					</li> -->

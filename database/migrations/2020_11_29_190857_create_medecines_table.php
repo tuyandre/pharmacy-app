@@ -15,7 +15,7 @@ class CreateMedecinesTable extends Migration
     {
         Schema::create('medecines', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name')->unique();
+            $table->string('name');
             $table->string('image')->nullable();
             $table->string('description');
             $table->bigInteger('price');

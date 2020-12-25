@@ -23,6 +23,10 @@ class HomeController extends Controller
     {
         return view('about');
     }
+    public function contactPage()
+    {
+        return view('contact');
+    }
     public function printInstructions($id)
     {
         $medecine = Medecine::find($id);

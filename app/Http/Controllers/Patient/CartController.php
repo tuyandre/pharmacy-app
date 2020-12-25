@@ -40,29 +40,24 @@ class CartController extends Controller
         $user = Auth::user()->id;
         $MedecineId = $request->input('MId');
         $checkIfUserHasCart = Cart::where('user_id', $user)->first();
-        $checkIfUserHasOrder = Order::where('user_id', $user)->first();
 
         //if there is no cart
-        if ($checkIfUserHasOrder) {
-            return redirect()->route('patientMedecines.index')->with('danger', 'there are other medecines that you didn t go to pick');
-        } else {
-            if (!$checkIfUserHasCart) {
-                $newCart = Cart::create([
-                    'user_id' => $user
-                ]);
-                if ($newCart) {
-                    $newCart->medecines()->attach($MedecineId);
-                }
+        if (!$checkIfUserHasCart) {
+            $newCart = Cart::create([
+                'user_id' => $user
+            ]);
+            if ($newCart) {
+                $newCart->medecines()->attach($MedecineId);
+            }
+            return redirect()->route('patientMedecines.index')->with('success', 'medecine added to your cart');
+        }
+        //if there is cart
+        else {
+            if (!$checkIfUserHasCart->medecines->contains($MedecineId)) {
+                $checkIfUserHasCart->medecines()->attach($MedecineId);
                 return redirect()->route('patientMedecines.index')->with('success', 'medecine added to your cart');
             }
-            //if there is cart
-            else {
-                if (!$checkIfUserHasCart->medecines->contains($MedecineId)) {
-                    $checkIfUserHasCart->medecines()->attach($MedecineId);
-                    return redirect()->route('patientMedecines.index')->with('success', 'medecine added to your cart');
-                }
-                return back()->with('danger', 'medecine already in your cart');
-            }
+            return back()->with('danger', 'medecine already in your cart');
         }
     }
     public function removeMedecineFromCart(Medecine $medecine, Request $request)
@@ -83,47 +78,43 @@ class CartController extends Controller
     public function calculateTotal(Request $request)
     {
         $user = Auth::user()->id;
-        $existingOrder = Order::where('user_id', $user);
-        if (!$existingOrder->exists()) {
-            //if the user hasn 't other medecines//
-            $input = $request->all();
-            for ($i = 0; $i < count($input['NberOfMedecines']); $i++) {
-                // if empty fields
-                if (empty($input['NberOfMedecines'][$i])) {
-                    return back()->with('danger', 'Please fill all fields');
-                }
-                // if completed fields
-                for ($j = 0; $j < count($input['Id']); $j++) {
-                    $medecineCheck = Medecine::where('id', $input['Id'][$j])->value('numberOf');
-                    $medecineName = Medecine::where('id', $input['Id'][$j])->value('name');
-                    $medecinePrice = Medecine::where('id', $input['Id'][$j])->value('price');
-                    if ($input['NberOfMedecines'][$j] > $medecineCheck) {
-                        return back()->with('danger', 'the ' . $medecineName .  ' medecine has only ' .  $medecineCheck  . ' items in the stock ');
-                    }
-                    $data = [
-                        'user_id' => Auth::user()->id
-                    ];
-                }
+        $input = $request->all();
+        for ($i = 0; $i < count($input['NberOfMedecines']); $i++) {
+            // if empty fields
+            if (empty($input['NberOfMedecines'][$i])) {
+                return back()->with('danger', 'Please fill all fields');
             }
-            $makeOrder = Order::create($data);
-            if ($makeOrder) {
-                $Order_Medecine = Order::where('user_id', $user)->first();
-                $Cart = Cart::where('user_id', $user)->first();
-                for ($i = 0; $i < count($input['Id']); $i++) {
-                    $medecinePrice = Medecine::where('id', $input['Id'][$i])->value('price');
-                    $items = $input['NberOfMedecines'][$i];
-                    $Order_Medecine->medecines()->attach(
-                        $input['Id'][$i],
-                        array('items' => $items, 'amount' => $medecinePrice * $items)
-                    );
+            // if completed fields
+            for ($j = 0; $j < count($input['Id']); $j++) {
+                $medecineCheck = Medecine::where('id', $input['Id'][$j])->value('numberOf');
+                $medecineName = Medecine::where('id', $input['Id'][$j])->value('name');
+                $medecinePrice = Medecine::where('id', $input['Id'][$j])->value('price');
+                if ($input['NberOfMedecines'][$j] > $medecineCheck) {
+                    return back()->with('danger', 'the ' . $medecineName .  ' medecine has only ' .  $medecineCheck  . ' items in the stock ');
                 }
-                $Cart = Cart::where('user_id', $user)->first();
-                $CartDeletion = Cart::where('user_id', $user);
-                if ($Cart->medecines()->detach()) {
-                    $CartDeletion->delete();
-                }
-                return redirect()->route('myTotal')->with('success', "here are the medecines you requested..you have to pass by each medecine's pharmacy to take them");
+                $data = [
+                    'user_id' => Auth::user()->id
+                ];
             }
+        }
+        $makeOrder = Order::create($data);
+        if ($makeOrder) {
+            $Order_Medecine = Order::where('user_id', $user)->first();
+            $Cart = Cart::where('user_id', $user)->first();
+            for ($i = 0; $i < count($input['Id']); $i++) {
+                $medecinePrice = Medecine::where('id', $input['Id'][$i])->value('price');
+                $items = $input['NberOfMedecines'][$i];
+                $Order_Medecine->medecines()->attach(
+                    $input['Id'][$i],
+                    array('items' => $items, 'amount' => $medecinePrice * $items)
+                );
+            }
+            $Cart = Cart::where('user_id', $user)->first();
+            $CartDeletion = Cart::where('user_id', $user);
+            if ($Cart->medecines()->detach()) {
+                $CartDeletion->delete();
+            }
+            return redirect()->route('myTotal')->with('success', "here are the medecines you requested..you have to pass by each medecine's pharmacy to take them");
         }
         //if the user requested other medecines
     }

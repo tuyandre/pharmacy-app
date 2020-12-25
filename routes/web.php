@@ -25,6 +25,7 @@ use Illuminate\Support\Facades\Route;
 //Before Authentication
 Route::get('/', [HomeController::class, 'welcomePage']);
 Route::get('/about', [HomeController::class, 'AboutPage']);
+Route::get('/contact', [HomeController::class, 'contactPage']);
 Route::get('redirects', [AuthController::class, 'redirects']);
 Route::post('/register', [AuthController::class, 'register'])->name('registration');
 Route::post('/login', [AuthController::class, 'login'])->name('authentication');
