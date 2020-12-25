@@ -51,6 +51,12 @@
               <p>Medecines Instructions</p>
             </a>
           </li>
+          <li class="nav-item ">
+            <a class="nav-link" href="{{ route('myOrders') }}">
+              <i class="material-icons">backpack</i>
+              <p>Medecine Orders</p>
+            </a>
+          </li>
         </ul>
       </div>
     </div>
