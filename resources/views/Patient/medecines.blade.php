@@ -14,7 +14,7 @@
             <div class="col-md-3">
                 <h5 class="text-danger"><b><marquee direction="up"
                     scrollamount="1">
-                you can search medecine by name or by location
+                you can search medecine by name or by location or by both
                 </marquee></b></h5>
             </div>
             <div class="col-md-6">
@@ -36,6 +36,20 @@
 
 <section class="category-section spad" style="background-color: #ffffe6">
     <div class="container">
+        <div class="row">
+            <div class="col-xl-6 col-lg-5">
+                <h4>Search By Name Or By Location Or By Both</h4>
+                <form class="contact-form" method="GET" action ="{{ route('searchByName') }}">
+                    @csrf
+                    <input type="text" autocomplete="off" name="name" placeholder="Name...">
+                    <input type="text" name="location" placeholder="Location">
+                    <br>
+                    <button class="site-btn btn-block">Search Medecines</button>
+                </form>
+            </div>
+
+        </div>
+        <br>
         <div class="row">
 
             <div class="col-lg-12  order-1 order-lg-2 mb-5 mb-lg-0">

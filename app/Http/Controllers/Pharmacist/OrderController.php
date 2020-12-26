@@ -29,4 +29,28 @@ class OrderController extends Controller
             ->with('numberOfMedecines', $numberOfMedecines)->with('numberOfInstitutions', $numberOfInstitutions)
             ->with('pharmacyName', $pharmacyName);
     }
+    public function changeOrder($id)
+    {
+        $order = Order::where('id', $id)->value('status');
+        if ($order == 1) {
+
+            $userUpdate = Order::where('id', $id)
+                ->update([
+                    'status' => 0
+                ]);
+            if ($userUpdate) {
+                return back()->with('success', 'order successfully changed to completed');
+            }
+            return back()->withInput()->with('danger', 'Please Try again');
+        } else {
+            $userUpdate = Order::where('id', $id)
+                ->update([
+                    'status' => 1
+                ]);
+            if ($userUpdate) {
+                return back()->with('success', 'order successfully changed to Pending');
+            }
+            return back()->withInput()->with('danger', 'Please Try again');
+        }
+    }
 }

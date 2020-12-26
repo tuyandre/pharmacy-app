@@ -14,7 +14,7 @@ class CartController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('Patient.auth');
+        $this->middleware('auth');
     }
     public function myCart()
     {

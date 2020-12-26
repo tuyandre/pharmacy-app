@@ -39,6 +39,7 @@ Route::resource('medecines', MedecineController::class);
 Route::resource('institutions', InstitutionController::class);
 Route::resource('instructions', InstructionController::class);
 Route::get('myOrders', [OrderController::class, 'myOrders'])->name('myOrders');
+Route::put('changeOrder/{id}', [OrderController::class, 'changeOrder'])->name('changeOrder');
 
 //Patient
 Route::resource('/patientMedecines', PatientMedecineController::class);

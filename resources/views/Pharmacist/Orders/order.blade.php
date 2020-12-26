@@ -43,6 +43,12 @@
                 <th>
                    Total to Pay
                   </th>
+                <th>
+                   Status
+                  </th>
+                <th>
+                   Action
+                  </th>
               </thead>
               <tbody>
                 <?php $counter = 1 ?>
@@ -58,6 +64,31 @@
       <td>{{ $medecine->pivot->items }}</td>
       <td>{{ $medecine->price }}</td>
       <td>{{ $medecine->pivot->amount }}</td>
+      <td>
+          @if($order->status == 0)
+          <span class="badge badge-info">Pending</span>
+          @else
+          <span class="badge badge-success">Completed</span>
+          @endif
+      </td>
+      <td>
+      <?php $form_class = $order->id ?>
+      @if ($order->status ==0)
+      <a class="btn btn-primary" href="" onclick="var result = confirm('Are you sure you want to make ths order complete?'); if( result ){ event.preventDefault(); document.getElementById('{{ $form_class }}').submit(); }else{event.preventDefault();}">
+          Mark as Completed
+      </a>
+       @else
+       <a class="btn btn-danger" href="" onclick="var result = confirm('Are you sure you want to make this order pending?'); if( result ){ event.preventDefault(); document.getElementById('{{ $form_class }}').submit(); }else{event.preventDefault();}">
+          Mark as Pending
+      </a>
+      @endif
+      <form id="{{ $form_class }}" action="{{ route('changeOrder',$order->id) }}" method="POST" style="display: none">
+        <input type="hidden" name="_method" value="put">
+        {{csrf_field()}}
+
+    </form>
+
+      <td>
     </tr>
   @endif
   @endforeach

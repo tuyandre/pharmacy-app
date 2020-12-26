@@ -42,9 +42,6 @@
                 <th>
                     Items available
                   </th>
-                <th>
-                    Instructions
-                  </th>
                   <th>
                     Action
                   </th>
@@ -61,7 +58,6 @@
                         <td><img src="{{$medecine->file_url}}" width="70" height="70"  alt="Image"></td>
                         <td>{{ $medecine->price }} rwf</td>
                         <td>{{ $medecine->numberOf }}</td>
-                        <td><a href={{ route('instructions.show',$medecine->id) }} class ="btn btn-primary">Instructions</a></td>
                         <td class="td-actions">
                             <a href="{{ route('medecines.edit',$medecine->id) }}" rel="tooltip" title="Edit medecine" class="btn btn-primary btn-link btn-sm">
                               <i class="material-icons">edit</i>

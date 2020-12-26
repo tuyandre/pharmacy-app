@@ -43,27 +43,13 @@
 							<h5 style="margin-top:15px">SMART PHARMACY</h5>
 						</a>
 					</div>
-                    @if(\Request::is('patientMedecines'))
-                    <div class="col-xl-3 col-lg-5">
-                        <form class="header-search-form" method="GET" action="{{ route('searchByName') }}">
-                            @csrf
-							<input type="text" autocomplete="off" name="medecineToSearch" placeholder="Search by Name ....">
-							<button><i class="flaticon-search"></i></button>
-						</form>
-                    </div>
+                    {{-- @if(\Request::is('patientMedecines'))
 
-                    <div class="col-xl-3 col-lg-5">
-                        <form class="header-search-form" method="GET" action="{{ route('searchByLocation') }}">
-                            @csrf
-							<input type="text" autocomplete="off" name="locationToSearch" placeholder="Search by Location ....">
-							<button><i class="flaticon-search"></i></button>
-						</form>
-                    </div>
                     @else
+                    @endif --}}
                     <div class="col-xl-6 col-lg-5">
 
                     </div>
-                    @endif
                     @if(Auth()->check())
                     <div class="col-xl-4 col-lg-5">
 						<div class="user-panel">

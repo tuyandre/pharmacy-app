@@ -6,12 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Models\Medecine;
 use App\Models\Pharmacy;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PatientMedecineController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth')->except('index');
+        $this->middleware('auth')->except(['index', 'show', 'searchByName', 'searchByLocation']);
     }
     /**
      * Display a listing of the resource.
@@ -58,32 +59,54 @@ class PatientMedecineController extends Controller
 
     public function searchByName(Request $request)
     {
-        $medecineToSearch = $request->input('medecineToSearch');
-        if (empty($medecineToSearch)) {
-            return back()->with('danger', 'please enter a medecine to search');
+        $name = $request->input('name');
+        $location = $request->input('location');
+        if (empty($name) && empty($location)) {
+            return back()->with('danger', 'please enter a medecine to search or a location to search');
         }
-        $filteredMedecines = Medecine::where('name', 'LIKE', '%' . $medecineToSearch . '%');
-        if (count($filteredMedecines->get()) == 0) {
-            return back()->with('danger', 'your search did not match any medicine..please try again');
+        if (!empty($name) && empty($location)) {
+            $filteredMedecines = Medecine::where('name', 'LIKE', '%' . $name . '%');
+            if (count($filteredMedecines->get()) == 0) {
+                return back()->with('danger', 'your search did not match any medicine..please try again');
+            }
+            return view('Patient.searchByName')->with('filteredmedecines', $filteredMedecines->simplePaginate(4))
+                ->with('search', $name);
         }
-        // return $filteredMedecines->count();
-        return view('Patient.searchByName')->with('filteredmedecines', $filteredMedecines->simplePaginate(4))
-            ->with('search', $medecineToSearch);
+        if (empty($name) && !empty($location)) {
+            $filteredpharmacies = Pharmacy::where('location', 'LIKE', '%' . $location . '%')->with('medecines');
+            if (count($filteredpharmacies->get()) == 0) {
+                return back()->with('danger', 'your search did not match any medicine..please try again');
+            }
+            return view('Patient.searchByLocation')->with('filteredpharmacies', $filteredpharmacies->simplePaginate(4))
+                ->with('search', $location);
+        }
+        if (!empty($name) && !empty($location)) {
+            $filteredMedecines = DB::table('medecines')
+                ->select('medecines.*')
+                ->join('pharmacies', 'pharmacies.id', '=', 'medecines.pharmacy_id')
+                ->where('pharmacies.location', 'LIKE', '%' . $location . '%')
+                ->where('medecines.name', 'LIKE', '%' . $name . '%');
+            if (count($filteredMedecines->get()) == 0) {
+                return back()->with('danger', 'your search did not match any medicine..please try again');
+            }
+            return view('Patient.searchByAll')->with('filteredmedecines', $filteredMedecines->simplePaginate(4))
+                ->with('name', $name)->with('location', $location);
+        }
     }
-    public function searchByLocation(Request $request)
-    {
-        $locationToSearch = $request->input('locationToSearch');
-        if (empty($locationToSearch)) {
-            return back()->with('danger', 'please enter a location');
-        }
-        $filteredpharmacies = Pharmacy::where('location', 'LIKE', '%' . $locationToSearch . '%')->with('medecines');
+    // public function searchByLocation(Request $request)
+    // {
+    //     $locationToSearch = $request->input('locationToSearch');
+    //     if (empty($locationToSearch)) {
+    //         return back()->with('danger', 'please enter a location');
+    //     }
+    //     $filteredpharmacies = Pharmacy::where('location', 'LIKE', '%' . $locationToSearch . '%')->with('medecines');
 
-        if (count($filteredpharmacies->get()) == 0) {
-            return back()->with('danger', 'your search did not match any medicine..please try again');
-        }
-        return view('Patient.searchByLocation')->with('filteredpharmacies', $filteredpharmacies->simplePaginate(4))
-            ->with('search', $locationToSearch);
-    }
+    //     if (count($filteredpharmacies->get()) == 0) {
+    //         return back()->with('danger', 'your search did not match any medicine..please try again');
+    //     }
+    //     return view('Patient.searchByLocation')->with('filteredpharmacies', $filteredpharmacies->simplePaginate(4))
+    //         ->with('search', $locationToSearch);
+    // }
 
     /**
      * Show the form for editing the specified resource.
