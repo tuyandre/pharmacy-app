@@ -39,6 +39,18 @@
               <p>Pharmacies</p>
             </a>
           </li>
+            <li class="nav-item ">
+                <a class="nav-link" href="{{ route('admin.pharmacist') }}">
+                    <i class="fa fa-users"></i>
+                    <p>Pharmacist</p>
+                </a>
+            </li>
+            <li class="nav-item ">
+                <a class="nav-link" href="{{ route('admin.patients') }}">
+                    <i class="fa fa-user-circle-o"></i>
+                    <p>Pacients</p>
+                </a>
+            </li>
 
         </ul>
       </div>
@@ -89,25 +101,6 @@
       <!-- End Navbar -->
       <div class="content">
         <div class="container-fluid">
-          <div class="row">
-            <div class="col-lg-6 offset-md-3 col-md-6 col-sm-6">
-              <div class="card card-stats">
-                <div class="card-header card-header-warning card-header-icon">
-                  <div class="card-icon">
-                    <i class="material-icons">local_hospital</i>
-                  </div>
-                  <p class="card-category">Total Number of Pharmacies</p>
-                  <h3 class="card-title">{{ $pharmacies->count() }}</h3>
-                </div>
-                <div class="card-footer">
-                  <div class="stats">
-                    <p>Available Pharmacies</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-  
-          </div>
        @yield('content')
         </div>
       </div>

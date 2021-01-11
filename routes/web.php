@@ -24,15 +24,23 @@ use Illuminate\Support\Facades\Route;
 */
 //Before Authentication
 Route::get('/', [HomeController::class, 'welcomePage']);
+Route::get('/google/map', [HomeController::class, 'maps']);
 Route::get('/about', [HomeController::class, 'AboutPage']);
 Route::get('/contact', [HomeController::class, 'contactPage']);
+Route::get('/admin/get/started', [HomeController::class, 'adminRegisterPage']);
 Route::get('redirects', [AuthController::class, 'redirects']);
 Route::post('/register', [AuthController::class, 'register'])->name('registration');
+Route::post('/admin/register', [AuthController::class, 'adminRegister'])->name('admin.registration');
 Route::post('/login', [AuthController::class, 'login'])->name('authentication');
 
 //Super Admin
 Route::resource('pharmacies', PharmacyController::class);
-// Route::get('/pharmacies', [PharmacyController::class, 'index'])->name('pharmacies.index');
+ Route::get('/pharmacies/edit/{id}', [PharmacyController::class, 'edit'])->name('pharmacies.edit');
+ Route::post('/pharmacies/update', [PharmacyController::class, 'update'])->name('pharmacies.update');
+
+Route::get('/pharmacist/', [PharmacyController::class, 'pharmacist'])->name('admin.pharmacist');
+Route::get('/patients/', [PharmacyController::class, 'patients'])->name('admin.patients');
+
 
 //Pharmacist
 Route::resource('medecines', MedecineController::class);
@@ -43,7 +51,9 @@ Route::put('changeOrder/{id}', [OrderController::class, 'changeOrder'])->name('c
 
 //Patient
 Route::resource('/patientMedecines', PatientMedecineController::class);
-Route::get('/searchByName', [PatientMedecineController::class, 'searchByName'])->name('searchByName');
+
+Route::POST('/searchByName', [PatientMedecineController::class, 'searchByName'])->name('searchByName');
+
 Route::get('/searchByLocation', [PatientMedecineController::class, 'searchByLocation'])->name('searchByLocation');
 Route::get('/myCart', [CartController::class, 'myCart'])->name('myCart');
 Route::post('/addMedecineToCart', [CartController::class, 'addMedecineToCart'])->name('addMedecineToCart');

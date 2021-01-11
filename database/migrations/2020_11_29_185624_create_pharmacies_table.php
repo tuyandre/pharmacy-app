@@ -21,6 +21,8 @@ class CreatePharmaciesTable extends Migration
             $table->string('description');
             $table->unsignedInteger('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users');
+            $table->string('latitude')->nullable();
+            $table->string('longitude')->nullable();
             $table->timestamps();
         });
     }

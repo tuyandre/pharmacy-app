@@ -1,6 +1,26 @@
 @extends('Super-Admin.Layouts.Layout')
 
 @section('content')
+
+    <div class="row">
+        <div class="col-lg-6 offset-md-3 col-md-6 col-sm-6">
+            <div class="card card-stats">
+                <div class="card-header card-header-warning card-header-icon">
+                    <div class="card-icon">
+                        <i class="material-icons">local_hospital</i>
+                    </div>
+                    <p class="card-category">Total Number of Pharmacies</p>
+                    <h3 class="card-title">{{ $pharmacies->count() }}</h3>
+                </div>
+                <div class="card-footer">
+                    <div class="stats">
+                        <p>Available Pharmacies</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
 <div class="row">
     <div class="col-md-12">
        <div class="row">
@@ -67,10 +87,10 @@
                              @endif
                             </td>
                              <td class="td-actions">
-                                <button type="button" rel="tooltip" title="Edit Pharmacy" class="btn btn-primary btn-link btn-sm">
+                                <a href="{{route('pharmacies.edit',['id'=>$pharmacy->id])}}" type="button" rel="tooltip" title="Edit Pharmacy" class="btn btn-primary btn-link btn-sm">
                                   <i class="material-icons">edit</i>
-                                </button>
-                                <button type="button" rel="tooltip" title="Remove Pharmacy" class="btn btn-danger btn-link btn-sm">
+                                </a>
+                                <button type="button" rel="tooltip" title="Delete Pharmacy" class="btn btn-danger btn-link btn-sm">
                                   <i class="material-icons">close</i>
                                 </button>
                               </td>

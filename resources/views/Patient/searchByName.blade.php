@@ -57,7 +57,7 @@
         <div class="text-center">
             {{ $filteredmedecines->render() }}
         </div>
-    </div>
+{{--    </div>--}}
 
 </section>
 @endsection

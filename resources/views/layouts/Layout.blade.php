@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zxx">
+<html lang="en">
 <head>
 	<title>Smart Pharmacy</title>
 	<meta charset="UTF-8">
@@ -8,12 +8,12 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<!-- Favicon -->
 	<link href="img/favicon.ico" rel="shortcut icon"/>
-
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-locationpicker/0.1.12/locationpicker.jquery.min.js" integrity="sha512-KGE6gRUEc5VBc9weo5zMSOAvKAuSAfXN0I/djLFKgomlIUjDCz3b7Q+QDGDUhicHVLaGPX/zwHfDaVXS9Dt4YA==" crossorigin="anonymous"></script>
 	<!-- Google Font -->
 	<link href="https://fonts.googleapis.com/css?family=Josefin+Sans:300,300i,400,400i,700,700i" rel="stylesheet">
+    <script type="text/Javascripts" src="https://maps.google.com/maps/api/js?sensor=true"></script>
+    <script type="text/javascript" async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCzFFGKTLODEd4uZH3vce8U-PL4c5zq-UQ&callback=initMap"></script>
 
-
-	<!-- Stylesheets -->
 	<link rel="stylesheet" href="/Pharmacy/css/bootstrap.min.css"/>
 	<link rel="stylesheet" href="/Pharmacy/css/font-awesome.min.css"/>
 	<link rel="stylesheet" href="/Pharmacy/css/flaticon.css"/>
@@ -22,11 +22,24 @@
 	<link rel="stylesheet" href="/Pharmacy/css/owl.carousel.min.css"/>
 	<link rel="stylesheet" href="/Pharmacy/css/animate.css"/>
 	<link rel="stylesheet" href="/Pharmacy/css/style.css"/>
+	<style>
+    /* Always set the map height explicitly to define the size of the div
+   * element that contains the map. */
+
+    #map_wrapper {
+    height: 400px;
+	}
+
+	#map_canvas {
+	    width: 100%;
+	    height: 100%;
+	}
+</style>
 
 
 
 </head>
-<body>
+<body >
 	<!-- Page Preloder -->
 	<div id="preloder">
 		<div class="loader"></div>
@@ -64,8 +77,7 @@
                                 <div class="shopping-card">
 									<i class="flaticon-bag"></i>
                                         <span>
-                                            {{Auth()->user()->cart->medecines->count()}}</span
-                                        >
+                                            {{Auth()->user()->cart->medecines->count()}}
                                         </span>
 
                                 </div>
@@ -119,7 +131,7 @@
 	<section class="footer-section">
 <p class="text-white text-center">Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved</p>
 
-			</div>
+{{--			</div>--}}
 		</div>
     </section>
 	<!-- Footer section end -->
@@ -135,6 +147,6 @@
 	<script src="/Pharmacy/js/jquery.zoom.min.js"></script>
 	<script src="/Pharmacy/js/jquery-ui.min.js"></script>
 	<script src="/Pharmacy/js/main.js"></script>
-
+	@yield("location")
 	</body>
 </html>

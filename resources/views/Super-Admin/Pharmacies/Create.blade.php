@@ -31,23 +31,37 @@
                   <div class="col-md-6">
                     <div class="form-group">
                       <label class="bmd-label-floating">Pharmacy Name</label>
-                      <input type="text" name="Pname" autocomplete="off" class="form-control">
+                      <input type="text" name="Pname" autocomplete="off" class="form-control" required autofocus>
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
                       <label class="bmd-label-floating">Pharmacy Location</label>
-                      <input type="text" name="Plocation" autocomplete="off" class="form-control">
+                      <input type="text" name="Plocation" autocomplete="off" class="form-control" required>
                     </div>
                   </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-8">
-                      <div class="form-group">
-                        {{-- <label class="bmd-label-floating">Pharmacy Description</label> --}}
-                        <textarea placeholder=" pharmacy description" autocomplete="off" name="Pdescription" class="form-control"></textarea>
+                  <div class="row">
+                      <div class="col-md-6">
+                          <div class="form-group">
+                              <label class="bmd-label-floating">Pharmacy Latitude</label>
+                              <input type="text" name="Platitude" autocomplete="off" class="form-control" required>
+                          </div>
                       </div>
-                    </div>
+                      <div class="col-md-6">
+                          <div class="form-group">
+                              <label class="bmd-label-floating">Pharmacy Longitude</label>
+                              <input type="text" name="Plongitude" autocomplete="off" class="form-control" required>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="row">
+                      <div class="col-md-12">
+                          <div class="form-group">
+                              {{-- <label class="bmd-label-floating">Pharmacy Description</label> --}}
+                              <textarea placeholder=" pharmacy description" autocomplete="off" name="Pdescription" class="form-control"></textarea>
+                          </div>
+                      </div>
                   </div>
                 <button type="submit" class="btn btn-primary pull-right">Create Pharmacy</button>
                 <div class="clearfix"></div>
@@ -59,3 +73,4 @@
     </div>
   </div>
 @endsection
+

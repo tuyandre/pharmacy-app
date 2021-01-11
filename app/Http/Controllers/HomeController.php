@@ -19,6 +19,9 @@ class HomeController extends Controller
         return view('welcome')->with('medecines', $medecines)
             ->with('MinPrice', $MinimumMedecinePrice)->with('medecinesCarousel', $MedecinesCarousel);
     }
+    public function maps(){
+        return view('googleMap');
+    }
     public function AboutPage()
     {
         return view('about');
@@ -34,5 +37,8 @@ class HomeController extends Controller
         $pdf = PDF::loadView('Patient.Instructions', compact('medecine'));
         $pdf->save(storage_path() . '_resultsPrint.pdf');
         return $pdf->download('resultsPrint.pdf');
+    }
+    public function adminRegisterPage(Request $request){
+        return view('auth.adminRegister');
     }
 }

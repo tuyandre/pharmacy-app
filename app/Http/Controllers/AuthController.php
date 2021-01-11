@@ -38,6 +38,47 @@ class AuthController extends Controller
         }
     }
 
+    public function adminRegister(Request $request){
+        $fname = $request->input('fname');
+        $lname = $request->input('lname');
+        $location = $request->input('location');
+        $phoneNo = $request->input('phoneNo');
+        $role = "Super-Admin";
+        $password = $request->input('password');
+        $password_confirmation = $request->input('password_confirmation');
+        if (empty($fname) || empty($lname) || empty($location) || empty($phoneNo) || empty($password) || empty($password_confirmation)) {
+            return back()->withInput()->with('danger', 'please fill all fields');
+        }
+
+        if (!$this->validatePhoneNumber($phoneNo)) {
+            return back()->withInput()->with('danger', 'invalid phone number');
+        }
+        if (strlen($password) < 8) {
+            return back()->withInput()->with('danger', 'password must be at least 8 characters');
+        }
+        if ($password !== $password_confirmation) {
+            return back()->withInput()->with('danger', 'password confirmation does not match');
+        }
+        $checkPhone = User::where('phone_no', $phoneNo)->exists();
+        if ($checkPhone) {
+            return back()->withInput()->with('danger', 'the telephone number provided has already been registered');
+        }
+            //save a patient
+            $user = User::create([
+                'fname' => $fname,
+                'lname' => $lname,
+                'phone_no' => $phoneNo,
+                'role' => $role,
+                'password' => Hash::make($password)
+            ]);
+            if ($user) {
+                Auth::login($user);
+
+                return redirect('pharmacies');
+            }
+
+    }
+
     public function register(Request $request)
     {
         $fname = $request->input('fname');
@@ -46,10 +87,13 @@ class AuthController extends Controller
         $phoneNo = $request->input('phoneNo');
         $role = $request->input('role');
         $password = $request->input('password');
+        $lat = $request->input('latitude');
+        $lng = $request->input('longitude');
         $password_confirmation = $request->input('password_confirmation');
-        if (empty($fname) || empty($role) || empty($lname) || empty($location) || empty($phoneNo) || empty($password) || empty($password_confirmation)) {
+        if (empty($fname) || empty($role) || empty($lname) || empty($location) || empty($phoneNo) || empty($password) || empty($password_confirmation) || empty($lat) || empty($lng)) {
             return back()->withInput()->with('danger', 'please fill all fields');
         }
+
         if (!$this->validatePhoneNumber($phoneNo)) {
             return back()->withInput()->with('danger', 'invalid phone number');
         }
@@ -83,11 +127,15 @@ class AuthController extends Controller
                 'lname' => $lname,
                 'phone_no' => $phoneNo,
                 'role' => $role,
-                'password' => Hash::make($password)
+                'latitude' => $lat,
+                'longitude' => $lng,
+                'password' => Hash::make($password),
             ]);
             if ($user) {
                 $updatePharmacy = Pharmacy::where('code', $code)->update([
-                    'user_id' => $user->id
+                    'user_id' => $user->id,
+                    'latitude' => $lat,
+                    'longitude' => $lng,
                 ]);
                 if ($updatePharmacy) {
                     Auth::login($user);
@@ -103,6 +151,8 @@ class AuthController extends Controller
                 'lname' => $lname,
                 'phone_no' => $phoneNo,
                 'role' => $role,
+                'latitude' => $lat,
+                'longitude' => $lng,
                 'password' => Hash::make($password)
             ]);
             if ($user) {

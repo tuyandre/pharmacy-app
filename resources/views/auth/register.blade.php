@@ -32,6 +32,8 @@
                     <input id="Code" autocomplete="off" name="pharmacyCode" style="display:none" type="text" placeholder="Pharmacy Code">
                     <input type="password" name="password" placeholder="Password">
                     <input type="password" name="password_confirmation" placeholder="Repeat Password">
+                    <input type="hidden" name="latitude" id="latitude" placeholder="Latitude" >
+                    <input type="hidden" name="longitude" id="longitude" placeholder="Longitude">
                     <br>
                     <button class="site-btn btn-block">REGISTER</button>
                 </form>
@@ -56,3 +58,25 @@
           }
       }
   </script>
+  @section('location')
+  <script type = "text/javascript">
+  x = navigator.geolocation;
+  x.getCurrentPosition(success, failure);
+  var latlng;
+  function success(position) {
+    var mylat = position.coords.latitude;
+    var mylong = position.coords.longitude;
+    $('#latitude').val(mylat);
+    $('#longitude').val(mylong);
+
+    var mapOptions = {
+      zoom: 16,
+      center: coords,
+      mapTypedId: google.maps.mapTypedId.ROADMAP
+    }
+  }
+  function failure() {
+    $('#body').append('<p>it doesnt work</p>');
+  }
+  </script>
+@endsection
