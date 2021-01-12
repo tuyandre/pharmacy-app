@@ -90,7 +90,7 @@ class AuthController extends Controller
         $lat = $request->input('latitude');
         $lng = $request->input('longitude');
         $password_confirmation = $request->input('password_confirmation');
-        if (empty($fname) || empty($role) || empty($lname) || empty($location) || empty($phoneNo) || empty($password) || empty($password_confirmation) || empty($lat) || empty($lng)) {
+        if (empty($fname) || empty($role) || empty($lname) || empty($location) || empty($phoneNo) || empty($password) || empty($password_confirmation)) {
             return back()->withInput()->with('danger', 'please fill all fields');
         }
 

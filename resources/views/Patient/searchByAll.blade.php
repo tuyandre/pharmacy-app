@@ -104,6 +104,11 @@ console.log(mylong);
         var myJSONString = test,
             myObject = JSON.parse(myJSONString);
         console.log("VIEW TEST", myObject);
+        var mar=[
+            <?php
+            for ($filteredmedecines i)
+            ?>
+        ];
 
         var markers=[
 
