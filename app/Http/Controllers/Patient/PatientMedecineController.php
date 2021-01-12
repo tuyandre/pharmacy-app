@@ -60,7 +60,6 @@ class PatientMedecineController extends Controller
     public function searchByName(Request $request)
     {
         $name = $request->input('name');
-        // $location = $request->input('location');
         $circle_radius = 3959;
         $max_distance = 20;
         $lat = $request->input('latitude');
@@ -80,7 +79,7 @@ class PatientMedecineController extends Controller
                               ) AS distance
                               "))
             ->where(function($query) use ($name){
-                $query->where('medecines.name', '=', $name);//->orWhere('expiry_at','=', NULL);
+                $query->where('medecines.name',  'LIKE', '%' . $name . '%');//->orWhere('expiry_at','=', NULL);
             })
                     ->having("distance", "<=", $max_distance)
                     ->orderBy("distance")

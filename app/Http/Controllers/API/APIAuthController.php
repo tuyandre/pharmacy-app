@@ -13,10 +13,7 @@ use Validator;
 class APIAuthController extends Controller
 
 {
-    public function __construct()
-    {
-        $this->middleware('auth:api', ['except' => ['login', 'register']]);
-    }
+
     public function login(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -83,12 +80,7 @@ class APIAuthController extends Controller
             return true;
         }
     }
-    public function logout()
-    {
-        Auth::logout();
 
-        return response()->json(['message' => 'User successfully signed out']);
-    }
     protected function createNewToken($token)
     {
         //return $token;
@@ -96,5 +88,33 @@ class APIAuthController extends Controller
             'access_token' => $token,
             'token_type' => 'bearer',
         ]);
+    }
+
+    public function logout()
+    {
+        Auth::logout();
+
+        return response()->json(['message' => 'User successfully signed out']);
+    }
+    public function mobileRegister(Request $request){
+        return User::create([
+            'fname' => $request['fname'],
+            'lname' => $request['lname'],
+            'phone_no' => $request['phone'],
+            'role' => "Patient",
+            'password' => Hash::make($request['password']),
+        ]);
+    }
+    public function mobileLogin(Request $request){
+            $chekauth=Auth::attempt(['phone_no' => $request->phone, 'password' => $request->password]);
+            if($chekauth){
+
+                return response()->json(['login' => $chekauth,'user'=>Auth::user()], 200);
+
+            }else{
+                return response()->json(['login' => $chekauth,'user'=>$chekauth], 401);
+            }
+
+
     }
 }

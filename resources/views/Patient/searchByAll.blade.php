@@ -29,6 +29,8 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
+
+                <p>{{$filteredmedecines}}</p>
                     <div class="row">
                         @foreach ($filteredmedecines as $medecine)
                         <div class="col-lg-2 col-sm-6">
@@ -97,7 +99,7 @@ console.log(mylong);
         map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
         map.setTilt(45);
 
-        var test = '<?php echo $tests; ?>';
+        var test = '<?php echo $filteredmedecines; ?>';
         // test = new Array(test);
         var myJSONString = test,
             myObject = JSON.parse(myJSONString);
@@ -106,22 +108,22 @@ console.log(mylong);
         var markers=[
 
             <?php
-            foreach ($tests as $det_key => $each) {
-                $data=$each['pharmacy'];
-                echo "['".$data['name'].", ".$data['location']."',".$data['latitude'].",".$data['longitude']."],";
+
+            foreach ($tests as  $eachs) {
+                $each=$eachs['pharmacy'];
+                echo "['".$each['name'].", ".$each['location']."',".$each['latitude'].",".$each['longitude']."],";
 
             }
             ?>
-
-
         ];
         var infoWindowContent=[];
         var iid=[];
         var j=0;
         for(var i in myObject) {
+            var dist=myObject[i].distance*1.60934;
             var  infoWind ="<div class='info_content'>"+
-                "<h3>"+myObject[i].pharmacy.name+"</h3>"+
-                "<p>"+myObject[i].id+"Km</p>"+
+                "<h3>"+myObject[i].name+"</h3>"+
+                "<p>"+dist.toFixed(2) +"Km</p>"+
                 "</div>";
             iid[0]=infoWind;
             infoWindowContent[j]=iid;

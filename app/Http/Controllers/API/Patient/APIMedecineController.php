@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API\Patient;
 
 use App\Http\Controllers\Controller;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\Medecine;
 use App\Models\Cart;
@@ -12,10 +13,7 @@ use Illuminate\Support\Facades\Auth;
 
 class APIMedecineController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth:api');
-    }
+
     public function viewAllMedecines()
     {
         $medecines = Medecine::with('pharmacy')->get();
@@ -41,18 +39,18 @@ class APIMedecineController extends Controller
         }
         return response()->json(['search results' => $filteredMedecines->get()], 200);
     }
-    public function addThisMedecineToCart($id)
+    public function addThisMedecineToCart(Request $request)
     {
-        $user = Auth::user()->id;
-        $Medecine = Medecine::find($id);
-        $checkIfUserHasCart = Cart::where('user_id', $user)->first();
-        $checkIfUserHasOrder = Order::where('user_id', $user)->first();
+        $user = User::find($request->user);
+        $Medecine = Medecine::find($request->medecine);
+        $checkIfUserHasCart = Cart::where('user_id', $user->id)->first();
+        $checkIfUserHasOrder = Order::where('user_id', $user->id)->first();
         if ($checkIfUserHasOrder) {
             return response()->json(['message' => 'there are other medecines that you didn t go to pick'], 500);
         } else {
             if (!$checkIfUserHasCart) {
                 $newCart = Cart::create([
-                    'user_id' => $user
+                    'user_id' => $user->id
                 ]);
                 if ($newCart) {
                     $newCart->medecines()->attach($Medecine);
@@ -67,11 +65,11 @@ class APIMedecineController extends Controller
             }
         }
     }
-    public function removeThisMedecineFromCart($id)
+    public function removeThisMedecineFromCart(Request $request)
     {
-        $user = Auth::user()->id;
-        $cart = Cart::where('user_id', $user)->first();
-        $Medecine = Medecine::find($id);
+        $user = User::find($request->user);
+        $cart = Cart::where('user_id', $user->id)->first();
+        $Medecine = Medecine::find($request->medecine);
         if ($cart->medecines()->detach($Medecine)) {
             if ($cart->medecines()->count() == 0) {
                 $cart->delete();
@@ -81,23 +79,23 @@ class APIMedecineController extends Controller
         }
         return response()->json(['message' => 'an error occured..please try again'], 500);
     }
-    public function myCart()
+    public function myCart(Request $request)
     {
-        $user = Auth::user();
-        $cart = Cart::where('user_id', $user->id)->with('medecines')->first();
+        $user = User::find($request['id']);
+        $cart = Cart::where('user_id', $request->id)->with('medecines')->first();
         if ($cart) {
 
             if ($cart->medecines()->count() > 0) {
                 return response()->json(['my_cart' => $cart, 'number' => $cart->medecines()->count()]);
             }
-            return response()->json(['message' => 'Dear ' . Auth()->user()->fname . ' ' . Auth()->user()->lname . ' your cart is currently empty']);
+            return response()->json(['message' => 'Dear ' . $user->fname . ' ' . $user->lname . ' your cart is currently empty']);
         }
-        return response()->json(['message' => 'Dear ' . Auth()->user()->fname . ' ' . Auth()->user()->lname . ' your cart is currently empty']);
+        return response()->json(['message' => 'Dear ' . $user->fname . ' ' . $user->lname . ' your cart is currently empty']);
     }
     public function calculateTotal(Request $request)
     {
-        $user = Auth::user()->id;
-        $existingOrder = Order::where('user_id', $user);
+        $user = User::find($request->user);
+        $existingOrder = Order::where('user_id', $user->id);
         if (!$existingOrder->exists()) {
             //if the user hasn 't other medecines//
             $input = $request->all();
@@ -115,14 +113,14 @@ class APIMedecineController extends Controller
                         return response()->json(['message' => 'the book ' . $medecineName .  ' medecine has only ' .  $medecineCheck  . ' items in the stock '], 500);
                     }
                     $data = [
-                        'user_id' => Auth::user()->id
+                        'user_id' => $user->id
                     ];
                 }
             }
             $makeOrder = Order::create($data);
             if ($makeOrder) {
-                $Order_Medecine = Order::where('user_id', $user)->first();
-                $Cart = Cart::where('user_id', $user)->first();
+                $Order_Medecine = Order::where('user_id', $user->id)->first();
+                $Cart = Cart::where('user_id', $user->id)->first();
                 for ($i = 0; $i < count($input['Id']); $i++) {
                     $medecinePrice = Medecine::where('id', $input['Id'][$i])->value('price');
                     $items = $input['NberOfMedecines'][$i];
@@ -131,8 +129,8 @@ class APIMedecineController extends Controller
                         array('items' => $items, 'amount' => $medecinePrice * $items)
                     );
                 }
-                $Cart = Cart::where('user_id', $user)->first();
-                $CartDeletion = Cart::where('user_id', $user);
+                $Cart = Cart::where('user_id', $user->id)->first();
+                $CartDeletion = Cart::where('user_id', $user->id);
                 if ($Cart->medecines()->detach()) {
                     $CartDeletion->delete();
                 }

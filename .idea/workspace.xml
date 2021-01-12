@@ -19,13 +19,20 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="81276062-1694-4230-a311-f2314b042f7e" name="Default Changelist" comment="" />
+    <list default="true" id="81276062-1694-4230-a311-f2314b042f7e" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/API/APIAuthController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/API/APIAuthController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/API/Patient/APIMedecineController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/API/Patient/APIMedecineController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/Patient/PatientMedecineController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/Patient/PatientMedecineController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/Patient/searchByAll.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/Patient/searchByAll.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/api.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/api.php" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ComposerSettings" synchronizationState="SYNCHRONIZE">
+  <component name="ComposerSettings" doNotAsk="true" synchronizationState="SYNCHRONIZE">
     <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
     <execution />
   </component>
@@ -167,6 +174,7 @@
     </include_path>
   </component>
   <component name="ProjectId" id="1mppWN63eQC3HwyQkxQlhA8Xwy1" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -194,6 +202,7 @@
       <option name="presentableId" value="Default" />
       <updated>1610200418211</updated>
       <workItem from="1610200424577" duration="38769000" />
+      <workItem from="1610349039595" duration="13071000" />
     </task>
     <servers />
   </component>
@@ -210,6 +219,7 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
     <state x="358" y="89" width="672" height="678" key="search.everywhere.popup" timestamp="1610209404880">
