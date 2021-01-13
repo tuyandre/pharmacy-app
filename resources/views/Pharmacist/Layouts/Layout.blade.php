@@ -130,7 +130,7 @@
                     <div class="card-icon">
                        <i class="material-icons">location_city</i>
                     </div>
-                    <p class="card-category">Institutions</p>
+                    <p class="card-category">Description</p>
                     <h3 class="card-title">{{ $numberOfInstitutions }}</h3>
                   </div>
                   <div class="card-footer">

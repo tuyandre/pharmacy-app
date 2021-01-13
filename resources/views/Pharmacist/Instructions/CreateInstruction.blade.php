@@ -22,7 +22,7 @@
             </div>
           <div class="card">
             <div class="card-header card-header-primary">
-              <h4 class="card-title"><b>Register new Instruction</b></h4>
+              <h4 class="card-title"><b>Register new Description</b></h4>
             </div>
             <div class="card-body">
               <form action={{ route('instructions.store')}} method="POST">
@@ -30,7 +30,7 @@
                 <div class="row">
                   <div class="col-md-12">
                     <div class="form-group">
-                      <label class="bmd-label-floating">Instruction description</label>
+                      <label class="bmd-label-floating">Instruction Description</label>
                       <input type="text" name="Instruction" autocomplete="off" class="form-control">
                     </div>
                   </div>

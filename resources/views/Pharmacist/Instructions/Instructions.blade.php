@@ -19,11 +19,11 @@
            </div>
        </div>
         <br>
-        <a href="{{ route('instructions.create') }}" class="btn btn-primary btn-round">Register new Instruction</a>
+        <a href="{{ route('instructions.create') }}" class="btn btn-primary btn-round">Register new Description</a>
         <br>
       <div class="card">
         <div class="card-header card-header-primary">
-          <h3 class="card-title "><b>My Medecines Instructions</b></h3>
+          <h3 class="card-title "><b>My Medecines Description</b></h3>
         </div>
         <div class="card-body">
           <div class="table-responsive">
