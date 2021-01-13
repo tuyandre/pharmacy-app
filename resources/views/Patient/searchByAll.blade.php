@@ -29,8 +29,6 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-
-                <p>{{$filteredmedecines}}</p>
                     <div class="row">
                         @foreach ($filteredmedecines as $medecine)
                         <div class="col-lg-2 col-sm-6">
@@ -47,13 +45,13 @@
                            <div class="pi-text">
                                <h6>Rwf {{ $medecine->price }}</h6>
                                <p>{{ $medecine->name }}</p>
-                               <p>{{(number_format((float)($medecine->distance * 1.60934) , 2, '.', ''))}}Km</p>
+                               <p>{{(number_format((float)($medecine->distance * 1.609344) , 2, '.', ''))}}Km</p>
                            </div>
                        </div>
 
                        </div>
                         @endforeach
-                       <div class="col-lg-6 col-sm-6">
+                       <div class="col-lg-8 col-sm-8 col-md-8">
                        <div id="map_wrapper">
                             <div id="map_canvas" class="mapping"></div>
                         </div>
@@ -68,6 +66,8 @@
         </div>
 {{--    </div>--}}
     <input id="medecineeees" value="{{$filteredmedecines}}" type="hidden">
+    <input id="latitude" type="hidden">
+    <input id="longitude"  type="hidden">
 
 </section>
 @endsection
@@ -75,20 +75,26 @@
     <script type="text/javascript" async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCzFFGKTLODEd4uZH3vce8U-PL4c5zq-UQ&callback=initMap"></script>
 
     <script type="text/javascript">
-    x = navigator.geolocation;
-    x.getCurrentPosition(success, failure);
-    var latlng;
-    function success(position) {
-        var mylat =position.coords.latitude;
-        var mylong = position.coords.longitude;
-        $('#latitude').val(mylat);
-        $('#longitude').val(mylong);
-console.log(mylong);
-    }
-    function failure() {
-        $('#body').append('<p>it doesnt work</p>');
-    }
+        // $(document).ready(function () {
+        var latlon=[];
+            var latlng;
 
+            x = navigator.geolocation;
+            x.getCurrentPosition(success, failure);
+
+            function success(position) {
+                var mylat1 = position.coords.latitude;
+                var mylong1 = position.coords.longitude;
+                $('#latitude').val(mylat1);
+                $('#longitude').val(mylong1);
+                console.log(mylong1)
+                console.log(mylat1)
+            }
+
+            function failure() {
+                $('#body').append('<p>it doesnt work</p>');
+            }
+        // });
     function initMap() {
         var map;
         var bounds = new google.maps.LatLngBounds();
@@ -98,42 +104,47 @@ console.log(mylong);
         // Display a map on the page
         map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
         map.setTilt(45);
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function (position) {
+                initialLocation =new  google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+                map.setCenter(initialLocation);
+            });
+        }
 
         var test = '<?php echo $filteredmedecines; ?>';
         // test = new Array(test);
         var myJSONString = test,
             myObject = JSON.parse(myJSONString);
-        console.log("VIEW TEST", myObject);
-        var mar=[
-            <?php
-            for ($filteredmedecines i)
-            ?>
-        ];
+        // console.log("VIEW TEST", myObject);
 
+        // console.log(latlon);
         var markers=[
-
             <?php
 
-            foreach ($tests as  $eachs) {
-                $each=$eachs['pharmacy'];
-                echo "['".$each['name'].", ".$each['location']."',".$each['latitude'].",".$each['longitude']."],";
+            foreach ($filteredmedecines as  $each) {
+                echo "['".$each->name.", ".$each->location."',".$each->latitude.",".$each->longitude."],";
 
             }
             ?>
+
         ];
+        // console.log(markers);
         var infoWindowContent=[];
-        var iid=[];
+
         var j=0;
         for(var i in myObject) {
+            var iid=[];
             var dist=myObject[i].distance*1.60934;
             var  infoWind ="<div class='info_content'>"+
                 "<h3>"+myObject[i].name+"</h3>"+
                 "<p>"+dist.toFixed(2) +"Km</p>"+
                 "</div>";
-            iid[0]=infoWind;
+          iid[0]=infoWind;
             infoWindowContent[j]=iid;
+            // infoWindowContent[0][j]=infoWind;
             j++;
         }
+        // console.log(infoWindowContent);
         // Display multiple markers on a map
         var infoWindow = new google.maps.InfoWindow(), marker, i;
 
